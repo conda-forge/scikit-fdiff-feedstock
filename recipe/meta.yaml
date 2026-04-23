@@ -6,20 +6,21 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/scikit-fdiff-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/scikit-fdiff-{{ version }}.tar.gz
   sha256: 05d39e607c553cbc3b3ec328b84a6f2665291cd095ef94ae8479819ad4fbe3ec
 
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.9
+    - python {{ python_min }}
     - pip
+    - setuptools
   run:
-    - python >=3.9
+    - python >={{ python_min }}
     - numpy
     - numba
     - scipy
@@ -44,6 +45,8 @@ requirements:
     - loguru
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - skfdiff
   
